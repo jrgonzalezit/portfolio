@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import { FileText, FolderGit2, Search } from "lucide-react";
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -66,34 +67,36 @@ export function CommandMenu({ items }: { items: SearchItem[] }) {
         title="Buscar"
         description="Buscar proyectos y posts del blog"
       >
-        <CommandInput
-          placeholder="Buscar proyectos y posts…"
-          value={query}
-          onValueChange={setQuery}
-        />
-        <CommandList>
-          <CommandEmpty>Sin resultados.</CommandEmpty>
-          {projectResults.length > 0 && (
-            <CommandGroup heading="Proyectos">
-              {projectResults.map((item) => (
-                <CommandItem key={item.url} value={item.title} onSelect={() => onSelect(item.url)}>
-                  <FolderGit2 />
-                  {item.title}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          )}
-          {postResults.length > 0 && (
-            <CommandGroup heading="Blog">
-              {postResults.map((item) => (
-                <CommandItem key={item.url} value={item.title} onSelect={() => onSelect(item.url)}>
-                  <FileText />
-                  {item.title}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          )}
-        </CommandList>
+        <Command>
+          <CommandInput
+            placeholder="Buscar proyectos y posts…"
+            value={query}
+            onValueChange={setQuery}
+          />
+          <CommandList>
+            <CommandEmpty>Sin resultados.</CommandEmpty>
+            {projectResults.length > 0 && (
+              <CommandGroup heading="Proyectos">
+                {projectResults.map((item) => (
+                  <CommandItem key={item.url} value={item.title} onSelect={() => onSelect(item.url)}>
+                    <FolderGit2 />
+                    {item.title}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+            {postResults.length > 0 && (
+              <CommandGroup heading="Blog">
+                {postResults.map((item) => (
+                  <CommandItem key={item.url} value={item.title} onSelect={() => onSelect(item.url)}>
+                    <FileText />
+                    {item.title}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
+          </CommandList>
+        </Command>
       </CommandDialog>
     </>
   );
