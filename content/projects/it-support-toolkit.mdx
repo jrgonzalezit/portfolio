@@ -1,0 +1,68 @@
+---
+title: "IT Support Toolkit"
+description: "Scripts de PowerShell que automatizan relevamiento de equipos, diagnóstico de red e inventario de software para soporte técnico N1/N2."
+technologies: ["PowerShell", "CIM/WMI", "Windows Registry"]
+category: "Herramientas IT"
+difficulty: "beginner"
+status: "completed"
+featured: true
+githubUrl: "https://github.com/jrgonzalezit/it-support-toolkit"
+date: "2026-06-27"
+role: "Autor único"
+tags: ["powershell", "automation", "it-support", "windows", "networking"]
+futureImprovements:
+  - "Limpieza de archivos temporales y caché"
+  - "Reporte unificado en HTML"
+  - "Chequeo de espacio en disco con alertas"
+---
+
+## Por qué lo hice
+
+Trabajando en soporte técnico N1/N2 (Le Utthe, retail multi-sucursal) repetía a mano, ticket tras ticket, las mismas tareas: relevar el hardware de un equipo, chequear si la red estaba fallando y armar un inventario de software para auditoría. Este toolkit automatiza esas tres tareas en PowerShell, pensado para acelerar la **resolución en primer contacto (FCR)** y estandarizar la documentación de incidencias.
+
+## Qué incluye
+
+| Script | Qué hace |
+|---|---|
+| `Get-SystemInfo.ps1` | Genera un reporte del equipo: SO, hardware, memoria, discos y red. Ideal para relevar una PC o documentar un ticket. |
+| `Test-NetworkHealth.ps1` | Diagnóstico rápido de conectividad (placa de red, gateway, DNS e internet) con resultado OK/FALLA por prueba. |
+| `Export-SoftwareInventory.ps1` | Exporta a CSV todo el software instalado (nombre, versión, fabricante, fecha). Útil para auditoría e inventario. |
+
+## Uso
+
+```powershell
+# Relevar un equipo
+.\scripts\Get-SystemInfo.ps1
+.\scripts\Get-SystemInfo.ps1 -ExportPath "C:\Reportes\equipo01.txt"
+
+# Diagnosticar la red
+.\scripts\Test-NetworkHealth.ps1
+.\scripts\Test-NetworkHealth.ps1 -TargetHost "www.google.com"
+
+# Inventariar software instalado
+.\scripts\Export-SoftwareInventory.ps1
+.\scripts\Export-SoftwareInventory.ps1 -OutFile "C:\Reportes\software.csv"
+```
+
+## Ejemplo de salida real
+
+```text
+-- SISTEMA --
+Equipo (Hostname)   : PC-SOPORTE-01
+Sistema Operativo   : Microsoft Windows 11 Pro (64 bits)
+Modelo              : Dell Latitude 7420
+RAM total           : 15.7 GB
+RAM libre           : 7.2 GB (54% en uso)
+
+Prueba            Estado Detalle
+------            ------ -------
+Placa de red / IP OK     IP 192.168.1.29 en Wi-Fi
+Gateway (router)  OK     Responde 192.168.1.1
+Salida a Internet OK     Responde 8.8.8.8 (latencia prom. 4 ms)
+```
+
+## Decisiones técnicas
+
+- **CIM en vez de WMI directo**: los cmdlets `Get-CimInstance` son más rápidos y no requieren privilegios elevados para la mayoría de las consultas, a diferencia de `Get-WmiObject`.
+- **Salida dual (consola + archivo)**: cada script funciona interactivo por defecto, pero acepta un parámetro de export para integrarse a un flujo de documentación de tickets sin pasos manuales extra.
+- **Sin dependencias externas**: corre con PowerShell 5.1 (el que trae Windows 10/11 de fábrica), para no depender de instalar nada en equipos de usuarios finales.

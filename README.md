@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Junior González
 
-## Getting Started
+Portfolio personal, 100% data-driven: agregar un proyecto o un post nuevo no requiere tocar componentes de React, solo archivos de contenido en `content/`.
 
-First, run the development server:
+Ver [`PROJECT_ANALYSIS.md`](./PROJECT_ANALYSIS.md) para el análisis del workspace que originó las decisiones de contenido y alcance, y [`ARCHITECTURE.md`](./ARCHITECTURE.md) para las decisiones técnicas.
+
+## Stack
+
+- [Next.js 15](https://nextjs.org) (App Router, React 19, TypeScript estricto)
+- [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com)
+- [motion](https://motion.dev) (Framer Motion) para animaciones
+- [content-collections](https://www.content-collections.dev) — contenido MDX validado con Zod, sin base de datos
+- [next-themes](https://github.com/pacocoursey/next-themes) — dark/light mode
+- [Resend](https://resend.com) — formulario de contacto (opcional, con fallback si no está configurado)
+
+## Empezar
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrí [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Ver [`docs/INSTALLATION.md`](./docs/INSTALLATION.md) para el setup completo con variables de entorno.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Agregar contenido
 
-## Learn More
+Ver [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md) — el resumen corto:
 
-To learn more about Next.js, take a look at the following resources:
+- **Proyecto nuevo:** un archivo `.mdx` en `content/projects/`.
+- **Post de blog nuevo:** un archivo `.mdx` en `content/blog/`.
+- **Experiencia/certificado nuevo:** un archivo `.mdx` en `content/experience/` o `content/certificates/`.
+- **Datos personales, redes, navegación, SEO:** todo vive en [`config/site.ts`](./config/site.ts).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+El sitio genera automáticamente la página, la card, el sitemap, el RSS (blog) y las imágenes OG a partir de esos archivos.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts
 
-## Deploy on Vercel
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Build de producción |
+| `npm run start` | Sirve el build de producción |
+| `npm run lint` | ESLint |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Ver [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) — pensado para Vercel.
